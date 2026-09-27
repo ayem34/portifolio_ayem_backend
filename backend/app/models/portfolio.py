@@ -49,13 +49,18 @@ class Technology(Base):
         String(255),
         nullable=True
     )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=None
+    )
 
     projects: Mapped[List["Project"]] = relationship(
         "Project",
         secondary="project_technologies",
         back_populates="technologies"
     )
-
+    
 
 class Project(Base):
     """
@@ -107,6 +112,11 @@ class Project(Base):
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=None
+    )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
@@ -156,6 +166,11 @@ class Skill(Base):
         ForeignKey("skill_categories.id", ondelete="RESTRICT"),
         nullable=False,
         index=True
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=None
     )
 
     category: Mapped["SkillCategory"] = relationship(

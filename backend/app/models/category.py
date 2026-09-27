@@ -1,6 +1,7 @@
+from datetime import datetime 
 import uuid
-from typing import List, TYPE_CHECKING
-from sqlalchemy import String
+from typing import List, TYPE_CHECKING, Optional
+from sqlalchemy import String,DateTime 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 
@@ -24,7 +25,11 @@ class ProjectCategory(Base):
         unique=True,
         nullable=False
     )
-
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=None
+    )
     # Relation 1:N vers les projets (sans delete-orphan pour protéger les projets)
     projects: Mapped[List["Project"]] = relationship(
         "Project",
@@ -47,6 +52,11 @@ class SkillCategory(Base):
         String(100),
         unique=True,
         nullable=False
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=None
     )
 
     # Relation 1:N vers les compétences

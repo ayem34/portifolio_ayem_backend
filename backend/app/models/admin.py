@@ -36,3 +36,8 @@ class Admin(Base):
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=None
+    )
