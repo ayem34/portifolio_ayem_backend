@@ -1,0 +1,10 @@
+# Environnements virtuels
+venv/
+env/
+
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+
+# Variables d'environnement (secrets)
+.env
