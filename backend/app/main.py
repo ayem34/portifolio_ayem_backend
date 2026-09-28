@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.core.config import settings
+from app.api.v1.router import api_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -9,7 +10,8 @@ app = FastAPI(
     redoc_url=f"{settings.API_V1_STR}/redoc",
 )
 
-
+# Inclusion du routeur API v1
+app.include_router(api_router, prefix="/api/v1")
 @app.get("/")
 async def root():
     """
@@ -21,3 +23,6 @@ async def root():
         "version": settings.VERSION,
         "environment": settings.ENVIRONMENT
     }
+
+
+
